@@ -1,0 +1,6 @@
+<VirtualHost *>      
+  ProxyPass "/app/kibana" "{{ kibana_url }}":"{{ kibana_port }}"
+  ProxyPassReverse "/app/kibana" "{{ kibana_url }}":"{{ kibana_port }}"
+  ProxyPass "/kibana" "{{ kibana_url }}":"{{ kibana_port }}"
+  ProxyPassReverse "/kibana" "{{ kibana_url }}":"{{ kibana_port }}"     
+</VirtualHost>

@@ -1,0 +1,5 @@
+---
+# defaults file for ansible-role-kibana
+kibana_url: localhost
+kibana_port: 5601
+kibana_proxy_port: 80

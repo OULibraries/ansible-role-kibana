@@ -1,0 +1,16 @@
+---
+# handlers file for ansible-role-elk
+#
+#- name: Reload Daemon
+#  systemd: daemon_reload=yes
+#
+#- name: Enable Kibana
+#  service:
+#    name: kibana
+#    enabled: yes
+#
+#- name: Start Kibana
+#  service:
+#    name: kibana
+#    state: started
+#

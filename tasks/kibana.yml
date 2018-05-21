@@ -1,0 +1,66 @@
+---
+- name: Ensure Elastic Repo Installed
+  yum_repository:
+    baseurl: https://artifacts.elastic.co/packages/6.x/yum
+    name: elastic
+    description: Elastic Co Repo
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: Install Kibana from Elastic Repo
+  yum:
+    name: kibana
+    state: present
+
+- name: Configure Server Port for Kibana
+  replace:
+    path: '/etc/kibana/kibana.yml'
+    regexp: '#server.port: 5601'
+    replace: 'server.port: {{ kibana_port }}'
+    backup: yes
+
+- name: Configure Server Host for Kibana
+  replace:
+    path: '/etc/kibana/kibana.yml'
+    regexp: '#server.host: "localhost"'
+    replace: 'server.host: "{{ kibana_url }}"'
+    backup: yes
+
+- name: Configure Elasticsearch URL for Kibana
+  replace:
+    path: '/etc/kibana/kibana.yml'
+    regexp: '#elasticsearch.url: "http://localhost:9200"'
+    replace: 'elasticsearch.url: "{{ elasticsearch_url }}:{{ elasticsearch_port }}"'
+    backup: yes
+
+#- name: Create nginx site config folders
+#  file:
+#    path: "/srv/kibana/etc/"
+#    state: directory
+#    owner: nginx
+#    group: wheel
+#    mode: 0755
+#
+- name: Create Apache config for Kibana
+  template:
+    src: kibana.conf.j2
+    dest: /etc/httpd/conf.d/kibana.conf
+    owner: apache
+    group: wheel
+    mode: 0644
+  
+- name: Enable Kibana
+  systemd:
+    name: kibana
+    daemon_reload: yes
+    enabled: yes
+
+- name: Start Kibana
+  systemd:
+    name: kibana
+    state: started
+
+- name: Set SElinux flag to ON for httpd_can_network_connect 
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes

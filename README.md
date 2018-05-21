@@ -12,7 +12,9 @@ Role Variables
 --------------
 # Default vars for ansible-role-kibana
 kibana_url: localhost
+
 kibana_port: 5601
+
 kibana_proxy_port: 80
 
 Dependencies

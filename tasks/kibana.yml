@@ -29,7 +29,7 @@
   replace:
     path: '/etc/kibana/kibana.yml'
     regexp: '#elasticsearch.url: "http://localhost:9200"'
-    replace: 'elasticsearch.url: "{{ elasticsearch_url }}:{{ elasticsearch_port }}"'
+    replace: 'elasticsearch.url: "{{ schema }}://{{ elasticsearch_url }}:{{ elasticsearch_port }}"'
     backup: yes
 
 #- name: Create nginx site config folders
@@ -40,13 +40,13 @@
 #    group: wheel
 #    mode: 0755
 #
-- name: Create Apache config for Kibana
-  template:
-    src: kibana.conf.j2
-    dest: /etc/httpd/conf.d/kibana.conf
-    owner: apache
-    group: wheel
-    mode: 0644
+#- name: Create Apache config for Kibana
+#  template:
+#    src: kibana.conf.j2
+#    dest: /etc/httpd/conf.d/kibana.conf
+#    owner: apache
+#    group: wheel
+#    mode: 0644
   
 - name: Enable Kibana
   systemd:

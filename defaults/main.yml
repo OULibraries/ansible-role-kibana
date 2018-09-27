@@ -4,3 +4,6 @@ schema: http
 kibana_url: localhost
 kibana_port: 5601
 kibana_proxy_port: 80
+elasticsearch_schema: "https"
+elasticsearch_url: "localhost"
+elasticsearch_porth: "9200"
